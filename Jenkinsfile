@@ -11,5 +11,12 @@ pipeline {
                 sh 'mvn -B -DskipTests clean package' 
             }
         }
+        stage('Create image') {
+            steps {
+            	sh 'ls'
+            	def customimage = docker.build("SpringHelloWorld")
+            	sh 'ls'
+            }
+        }
     }
 }
