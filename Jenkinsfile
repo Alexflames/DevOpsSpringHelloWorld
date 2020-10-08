@@ -23,7 +23,7 @@ pipeline {
             	sh 'ls'
             	script {
 		        	sh 'ls'
-		        	def customimage = docker.build("SpringHelloWorld:latest")
+		        	def customimage = docker.build("springhelloworld:latest")
 		        	sh 'ls'
             	}
             }
