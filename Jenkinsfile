@@ -14,8 +14,11 @@ pipeline {
         stage('Create image') {
             steps {
             	sh 'ls'
-            	def customimage = docker.build("SpringHelloWorld")
-            	sh 'ls'
+            	script {
+		        	sh 'ls'
+		        	def customimage = docker.build("SpringHelloWorld")
+		        	sh 'ls'
+            	}
             }
         }
     }
