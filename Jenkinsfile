@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    environment {
+    	registry = "alexflames/mavenjenkins_ssu"
+    	registryCredential = "alexflames"
+    }
     stages {
         stage('Build') { 
             agent {
@@ -20,13 +24,24 @@ pipeline {
                 }
             }
             steps {
-            	sh 'ls'
-            	script {
-		        	sh 'ls'
-		        	def customimage = docker.build("springhelloworld:latest")
-		        	sh 'ls'
+            	script {	
+			def customimage = docker.build("${registry}:${env.BUILD_ID}")	
             	}
             }
+        }
+        stage('Deploy image') {
+        	steps {
+        		script {
+        			docker.withRegistry('', registryCredential) {
+        				customimage.push()
+        			}
+        		}
+        	}
+        }
+        stage('Cleaning up') {
+        	steps {
+        		sh "docker rmi $registry:$BUILD_NUMBER"
+        	}
         }
     }
 }
