@@ -3,6 +3,7 @@ pipeline {
     environment {
     	registry = "alexflames/mavenjenkins_ssu"
     	registryCredential = "alexflames"
+    	dockerImage = ''
     }
     stages {
         stage('Build') { 
@@ -25,7 +26,7 @@ pipeline {
             }
             steps {
             	script {	
-			def customimage = docker.build("${registry}:${env.BUILD_ID}")	
+			dockerImage = docker.build("${registry}:${env.BUILD_ID}")	
             	}
             }
         }
@@ -33,7 +34,7 @@ pipeline {
         	steps {
         		script {
         			docker.withRegistry('', registryCredential) {
-        				customimage.push()
+        				dockerImage.push()
         			}
         		}
         	}
