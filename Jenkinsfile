@@ -40,7 +40,7 @@ pipeline {
         			catch(all) {
         		
         			} 
-        			sh 'docker run -d -p 8181:8080 -n testproject ${registry}:${env.BUILD_ID} 
+        			sh 'docker run -d -p 8181:8080 -n testproject ${registry}:${env.BUILD_ID}'
 		    	}
         	}
         }
